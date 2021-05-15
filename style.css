@@ -125,12 +125,12 @@ section {
 }
 
 #exchangeTo {
-    color: gray;
+    opacity: 0.6;
 }
 
 #transaction input, #transSign, #exchangeTo {
     border: none;
-    font-size: 30px;
+    font-size: 160%;
     background: none;
     color: white;
     outline: none;
