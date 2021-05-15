@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="chain.js" defer></script>
+    <link rel="stylesheet" href="style.css"/>
+    <title>Simon's Blockchain</title>
+</head>
+<body onload="start()">
+    <header>
+        <h1>Simon's Blockchain:</h1><br/>
+        <div id="people"></div>
+    </header>
+
+    <h2 id="BC_title"></h2>
+    <section>
+            <div>
+            <div id="transaction">
+                    <h1 id="transTitle">Send Money</h1>
+                    <div id="senders">
+                        <div>
+                            <label>From:</label><br/><br/>
+                            <select id="user1" onchange="refreshExahnge()"></select><br/><br/>
+                        </div>
+                        <div>
+                            <label>Recipient:</label><br/><br/>
+                            <select id="user2"  onchange="refreshExahnge()"></select><br/><br/>
+                        </div>
+                    </div>
+                    <div id="transDisplay">
+                        <label id="transSign"></label>
+                        <input type="text" id="amount" placeholder="0"/>
+                        <label id="exchangeTo"></label>
+                    </div>
+                    <p id="errPrint"></p><br/>
+                <button id="sendMoney">Send</button>
+            </div>
+        </div>
+        <div id="display"></div>
+    </section>
+</body>
+</html>
