@@ -218,7 +218,7 @@ var chain = [
     to: "-",
     Efrom: "-",
     Eto: "-",
-    hash: "init",
+    hash: "Initial Block",
     prevHash: "-",
     time: Date.now(),
   },
