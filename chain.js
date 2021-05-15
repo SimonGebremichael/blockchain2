@@ -28,9 +28,17 @@ function start() {
         else {
           f.amount -= amount;
           t.amount += parseInt(EResult);
-          populatePeople();
+          document.getElementById("a" + f.id).innerText =
+            f.currentcy + ": " + f.amount;
+          document.getElementById("a" + t.id).innerText =
+            t.currentcy + ": " + t.amount;
+          document.getElementsByClassName("p" + f.id)[0].style.animation =
+            "flipInX 0.5s";
+          document.getElementsByClassName("p" + t.id)[0].style.animation =
+            "flipInX 0.7s";
+
           var h = await hash(Date.now());
-          chain.push({
+          var blk = {
             from: f.name,
             to: t.name,
             Efrom: EFrom + ": " + amount,
@@ -38,8 +46,9 @@ function start() {
             hash: h.substring(0, 11),
             prevHash: chain[chain.length - 1].hash,
             time: Date.now(),
-          });
-          printChain();
+          };
+          chain.push(blk);
+          chain_shell(blk, 100);
         }
       } else err.innerText = "Can't send to same account";
     });
@@ -89,54 +98,56 @@ function printChain() {
     ? (document.getElementById("BC_title").innerText = chain.length + " Block")
     : (document.getElementById("BC_title").innerText =
         chain.length + " Blocks");
-  chain.forEach((element, index) => {
-    var container = document.createElement("div");
-    container.id = "blockContainer";
-    var chainArt = document.createElement("div");
-    chainArt.id = "chainArt";
-    var block = document.createElement("div");
-    block.id = "block";
+  chain.forEach((element, index) => chain_shell(element, index));
+}
 
-    if (index <= 0) {
-      container.style.gridTemplateColumns = "100%";
-      container.style.width = "100%";
-      block.style.width = "70%";
-      block.style.marginLeft = "20%";
-    }
+function chain_shell(element, index) {
+  var container = document.createElement("div");
+  container.id = "blockContainer";
+  var chainArt = document.createElement("div");
+  chainArt.id = "chainArt";
+  var block = document.createElement("div");
+  block.id = "block";
 
-    var data = document.createElement("p");
-    data.innerHTML =
-      "From: <label>" +
-      element.from +
-      "</label> To:  <label>" +
-      element.to +
-      "</label>";
-    var amount = document.createElement("p");
-    amount.innerHTML =
-      "Transfer:  <label>" +
-      element.Efrom +
-      "</label> for <label>" +
-      element.Eto +
-      "</label>";
-    var hash = document.createElement("p");
-    hash.innerHTML = "Hash:  <label>" + element.hash + "</label>";
-    hash.id = "hash";
-    var prev = document.createElement("p");
-    prev.innerHTML = "Previouse Hash:  <label>" + element.prevHash + "</label>";
-    var time = document.createElement("p");
-    time.innerHTML = "Time:  <label>" + element.time + "</label>";
+  if (index <= 0) {
+    container.style.gridTemplateColumns = "100%";
+    container.style.width = "100%";
+    block.style.width = "70%";
+    block.style.marginLeft = "20%";
+  }
 
-    block.appendChild(data);
-    block.appendChild(amount);
-    block.appendChild(hash);
-    block.appendChild(prev);
-    block.appendChild(time);
-    if (index > 0) {
-      container.appendChild(chainArt);
-    }
-    container.appendChild(block);
-    document.getElementById("display").appendChild(container);
-  });
+  var data = document.createElement("p");
+  data.innerHTML =
+    "From: <label>" +
+    element.from +
+    "</label> To:  <label>" +
+    element.to +
+    "</label>";
+  var amount = document.createElement("p");
+  amount.innerHTML =
+    "Transfer:  <label>" +
+    element.Efrom +
+    "</label> for <label>" +
+    element.Eto +
+    "</label>";
+  var hash = document.createElement("p");
+  hash.innerHTML = "Hash:  <label>" + element.hash + "</label>";
+  hash.id = "hash";
+  var prev = document.createElement("p");
+  prev.innerHTML = "Previouse Hash:  <label>" + element.prevHash + "</label>";
+  var time = document.createElement("p");
+  time.innerHTML = "Time:  <label>" + element.time + "</label>";
+
+  block.appendChild(data);
+  block.appendChild(amount);
+  block.appendChild(hash);
+  block.appendChild(prev);
+  block.appendChild(time);
+  if (index > 0) {
+    container.appendChild(chainArt);
+  }
+  container.appendChild(block);
+  document.getElementById("display").appendChild(container);
 }
 
 function populatePeople() {
@@ -144,12 +155,14 @@ function populatePeople() {
   people.forEach((element) => {
     var person = document.createElement("div");
     person.id = "person";
+    person.className = "p" + element.id;
 
     var name = document.createElement("h3");
     name.innerText = element.name;
 
     var amount = document.createElement("p");
     amount.innerText = element.currentcy + ": " + element.amount;
+    amount.id = "a" + element.id;
 
     person.appendChild(name);
     person.appendChild(amount);
